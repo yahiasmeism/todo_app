@@ -19,8 +19,8 @@ app.use(express.json());
 
 //! routes
 app.use('/api', require('./routes/api'));
-app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/api/todos', require('./routes/todoRoutes'));
+app.use('/api', require('./routes/authRoutes'));
+app.use('/api', require('./routes/todoRoutes'));
 
 //! handle not found route
 app.all('*', (req, res) => {

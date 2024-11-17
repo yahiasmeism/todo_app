@@ -6,10 +6,10 @@ const { route } = require('./api');
 
 
 router.use(verifyJWT);
-router.route('/').get(todoController.getAllTodos);
-router.route('/').post(todoController.createTodo);
-router.route('/:ids').delete(todoController.deleteTodo);
-router.route('/:id').put(todoController.updateTodo);
+router.route('/todos').get(todoController.getAllTodos);
+router.route('/todos').post(todoController.createTodo);
+router.route('/todos/:id').delete(todoController.deleteTodo);
+router.route('/todos/:id').put(todoController.updateTodo);
 
 
 module.exports = router;
