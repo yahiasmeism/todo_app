@@ -5,17 +5,17 @@ const Joi = require('joi');
 
 const registerSchema = Joi.object({
     firstName: Joi.string().min(2).max(30).required(),
+    userName: Joi.string().min(2).max(30).required(),
     lastName: Joi.string().min(2).max(30).required(),
     email: Joi.string().email().required(),
-    password: Joi.string().min(6).required()
+    password: Joi.string().min(6).required(),
 });
 
 const register = async (req, res) => {
-    const { firstName, lastName, email, password } = req.body;
 
 
     // validate user input
-    const { error } = registerSchema.validate({ firstName, lastName, email, password });
+    const { error } = registerSchema.validate(req.body);
     if (error) return res.status(400).json({ error: error.details[0].message });
 
 
@@ -60,10 +60,10 @@ const loginSchema = Joi.object({
 });
 
 const login = async (req, res) => {
-    const { email, password } = req.body;
+
 
     // validate user input
-    const { error } = loginSchema.validate({ email, password });
+    const { error } = loginSchema.validate(req.body);
     if (error) {
         return res.status(400).json({ error: error.details[0].message });
     }
@@ -85,7 +85,7 @@ const login = async (req, res) => {
         // set cookies
         res.cookie('jwt', refreshToken, { httpOnly: true, scure: true, sameSite: 'None', maxAge: 7 * 24 * 60 * 60 * 1000 });
 
-        res.status(200).json({ id: foundUser._id, email: foundUser.email, token: token, refreshToken: refreshToken });
+        res.status(200).json({ id: foundUser._id, email: foundUser.email, userName: foundUser.userName, token: token, refreshToken: refreshToken });
 
     } catch (error) {
         res.status(500).json({ error: err.message });
